@@ -296,6 +296,7 @@
         }*/
         check = 1;
         lots = 3;
+        document.getElementById("divine").style = "Background: #4fa4c8; color: #7d0783; width: 50px; height: 50px";
         for(var i = 0, j = 0; (  (i <= grids-1) && (j != bombs)  ); i++) {
             if( (  ( Math.floor(Math.random()*(grids-i)) ) +1  ) <= (bombs-j) ) {
                 j++;
@@ -500,7 +501,7 @@
         document.getElementById(final).click();
         lots--;
         if(lots == 0) {
-            document.getElementById("divine").style = "color: #000000 ; Background: #c6394c";
+            document.getElementById("divine").style = "color: #808080 ; Background: #000000; width: 50px; height: 50px";
         }
       }
     }
