@@ -1,17 +1,99 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
 
-<head>
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    
+    <title>踩地雷</title>
+    <!--<style type="text/css">-->
+    <style>
 
-<meta charset="UTF-8">
+      text {
+        background-color: #282c34;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
 
-<title>踩地雷</title>
+      table {
+        background-color: #282c34;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
 
-</head>
+      button {
+        Background: #4fa4c8;
+        color: #7d0783;
+        width: 25px;
+        height: 25px;
+        border: none;
+      }
 
-<body>
-    <button id=setting type="button" onclick="setting()">set the bombs</button><br></br><br></br><br></br>
-    <button id=set_finish type="button"></button>
+    </style>
+  </head>
+  <body>
+    
+    
+    
+    <!--align-items: center;
+    justify-content: center;-->
+
+    
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+
+    <p></p>
+
+    
+    <table>
+      <tbody>
+        <tr><td><button id=setting type="button" style="width: 50px; height: 50px" onclick="setting()">set the bombs</button></td></tr>
+        <tr><td><button id=set_finish type="button" style="width: 50px; height: 50px"></button></td></tr>
+      </tbody>
+    </table>
+    <text id= "distance" style= "color: #ffffff">距離獲勝還剩  格</text>
+
+    <table>
+      <tbody>
+        <tr>
+          <td><button id="divine" type="button" style="width: 50px; height: 50px" onclick="divine()"><b>鐵口直斷</b></button></td>
+        </tr>
+      </tbody>
+    </table>
 
     <table>
         <tbody>
@@ -137,21 +219,50 @@
         </tr>
         </tbody>
     </table>
+
+
+
     
-        <!-- if(num == 1) {
-            y = document.getElementById(1)
-            z = document.getElementById(2)
-            y.innerHTML = Math.floor(Math.random()*100)
-        } -->
+    
+    <table>
+      <tbody>
+        <tr><td><p></p></td></tr>
+        <tr><td><p></p></td></tr>
+        <tr><td><p></p></td></tr>
+        <tr><td><p></p></td></tr>
+        <tr><td><p></p></td></tr>
+        <tr><td><p></p></td></tr>
+        <tr><td><p></p></td></tr>
+        <tr><td><p></p></td></tr>
+        <tr><td><p></p></td></tr>
+        <tr><td><p></p></td></tr>
+        <tr><td><p></p></td></tr>
+        <tr><td><p></p></td></tr>
+        <tr><td><p></p></td></tr>
+        <tr><td><p></p></td></tr>
+        <tr><td><p></p></td></tr>
+        <tr><td><p></p></td></tr>
+        <tr><td><p></p></td></tr>
+        <tr><td><p></p></td></tr>
+      </tbody>
+    </table>
+  </body>
 
-
-
-</body>
-
-<script>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <script>
     var bombs = 15;
     var grids = 100;
-    var Locate = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    var Locate = [0,
+                  0,0,0,0,0,0,0,0,0,0,
+                  0,0,0,0,0,0,0,0,0,0,
+                  0,0,0,0,0,0,0,0,0,0,
+                  0,0,0,0,0,0,0,0,0,0,
+                  0,0,0,0,0,0,0,0,0,0,
+                  0,0,0,0,0,0,0,0,0,0,
+                  0,0,0,0,0,0,0,0,0,0,
+                  0,0,0,0,0,0,0,0,0,0,
+                  0,0,0,0,0,0,0,0,0,0,
+                  0,0,0,0,0,0,0,0,0,0 ];
     var bomb_matrix = [0,
                        0,0,0,0,0,0,0,0,0,0,
                        0,0,0,0,0,0,0,0,0,0,
@@ -163,28 +274,60 @@
                        0,0,0,0,0,0,0,0,0,0,
                        0,0,0,0,0,0,0,0,0,0,
                        0,0,0,0,0,0,0,0,0,0 ];
+    var visited_matrix = [0,
+                          0,0,0,0,0,0,0,0,0,0,
+                          0,0,0,0,0,0,0,0,0,0,
+                          0,0,0,0,0,0,0,0,0,0,
+                          0,0,0,0,0,0,0,0,0,0,
+                          0,0,0,0,0,0,0,0,0,0,
+                          0,0,0,0,0,0,0,0,0,0,
+                          0,0,0,0,0,0,0,0,0,0,
+                          0,0,0,0,0,0,0,0,0,0,
+                          0,0,0,0,0,0,0,0,0,0,
+                          0,0,0,0,0,0,0,0,0,0 ];
+    var check = 1;
+    var lots = 3;
+
     function setting() {
         /*for(var i = 1; i <= 100; i++) {
             if(Math.floor(Math.random()*100)+1 <= bombs) {
                 console.log(i);
             }
         }*/
+        check = 1;
+        lots = 3;
         for(var i = 0, j = 0; (  (i <= grids-1) && (j != bombs)  ); i++) {
             if( (  ( Math.floor(Math.random()*(grids-i)) ) +1  ) <= (bombs-j) ) {
                 j++;
-                Locate[j] = [i+1];
+                Locate[j] = i+1;
             }
         }
         for(var i = 0; i <= bombs; i++) {
             console.log(Locate[i]);
         }
-        for(var i = 1; i <= bombs; i++) {
-            bomb_matrix[Locate[i]] = 1;
+        console.log("斷");
+        for(var i = 1; i <= 100; i++) {
+            bomb_matrix[i] = 0;
+        }
+        for(var i = 1; i <= 100; i++) {
+            visited_matrix[i] = 0;
+            var unknown = document.getElementById(i);
+            unknown.innerHTML = "?";
+            unknown.style = "Background: #4fa4c8; color: #7d0783; font-weight: bold; text-decoration: underline"
+            if(Locate[i] != 0) {
+                bomb_matrix[Locate[i]] = 1;
+            }
+        }
+        for(var i = 1; i <= 100; i++) {
+          if(bomb_matrix[i] == 0) console.log(i);
         }
         //console.log(bomb_matrix);
-        document.getElementById("setting").innerHTML = "";
+        //document.getElementById("setting").innerHTML = "";
         var y = document.getElementById("set_finish")
         y.innerHTML = "set finish";
+        var D = document.getElementById("distance");
+        var yet = 100-bombs;
+        D.innerHTML = "距離獲勝還差 " + yet + " 格";
     }
 
     function myFunction(num) {
@@ -192,7 +335,6 @@
         /*if(y.innerHTML == "?") y.innerHTML = 1;
         else y.innerHTML = String(parseInt(y.innerHTML) + 1);*/
         /*y.innerHTML = Math.floor(Math.random()*100)*/
-        var check = 0;
         var danger = 0;
 
         if(num == 1) {
@@ -250,15 +392,116 @@
             if(bomb_matrix[num+11] == 1) danger++;
         }
 
-        for(var i = 0; i <= bombs; i++) {
-            if(num == Locate[i]) check = 1;
+        if(bomb_matrix[num] == 1) {
+          y.innerHTML = "x";
+          y.style = "Background: #c6394c; color: #000000; font-weight: bold"
+
+          if(check > 1) {
+            check--;
+          } else {
+            check = 0;
+          }
+
+        } else {
+          y.innerHTML = danger;
+          y.style = "Background: #4fc89a; font-weight: bold";
+          visited_matrix[num] = 1;
         }
-        y.innerHTML = (check == 0) ? danger : "x";
-        y.innerHTML = y.innerHTML.bold();
-        y.innerHTML = y.innerHTML;
-        if(check == 1) alert("You died!");
+        if(check == 0) alert("You died!");
+        
+        
+
+        var D = document.getElementById("distance");
+        var yet = 100-bombs;
+        for(var i = 1; i <= 100; i++) {
+          if(visited_matrix[i] == 1) {
+            yet--;
+          }
+        }
+        D.innerHTML = "距離獲勝還差 " + yet + " 格";
+        if(yet == 0) {
+          alert("Victory!");
+          document.getElementById("setting").click();
+        }
     }
 
-</script>
+    function divine() {
+      if(lots >= 1) {
+        var final = Math.floor(Math.random()*100)+1;
+        var danger = 8;
+        var min_danger = danger;
+        
+        for(var i = 1; i <= 5; i++) {
+          var stageful = Math.floor(Math.random()*100)+1;
+          while((bomb_matrix[stageful] == 1)||(visited_matrix[stageful] == 1)) stageful = Math.floor(Math.random()*100)+1;
+          danger = 0;
+
+          if(stageful == 1) {
+              if(bomb_matrix[ 2] == 1) danger++;
+              if(bomb_matrix[11] == 1) danger++;
+              if(bomb_matrix[12] == 1) danger++;
+          } else if(stageful == 10) {
+              if(bomb_matrix[ 9] == 1) danger++;
+              if(bomb_matrix[19] == 1) danger++;
+              if(bomb_matrix[20] == 1) danger++;
+          } else if(stageful == 91) {
+              if(bomb_matrix[81] == 1) danger++;
+              if(bomb_matrix[82] == 1) danger++;
+              if(bomb_matrix[92] == 1) danger++;
+          } else if(stageful == 100) {
+              if(bomb_matrix[89] == 1) danger++;
+              if(bomb_matrix[90] == 1) danger++;
+              if(bomb_matrix[99] == 1) danger++;
+          } else if(stageful < 10) {
+              if(bomb_matrix[stageful+9 ] == 1) danger++;
+              if(bomb_matrix[stageful+10] == 1) danger++;
+              if(bomb_matrix[stageful+11] == 1) danger++;
+
+              if(bomb_matrix[stageful+1] == 1) danger++;
+              if(bomb_matrix[stageful-1] == 1) danger++;
+          } else if(stageful > 91) {
+              if(bomb_matrix[stageful-9 ] == 1) danger++;
+              if(bomb_matrix[stageful-10] == 1) danger++;
+              if(bomb_matrix[stageful-11] == 1) danger++;
+
+              if(bomb_matrix[stageful+1] == 1) danger++;
+              if(bomb_matrix[stageful-1] == 1) danger++;
+          } else if((stageful % 10) == 1) {
+              if(bomb_matrix[stageful-9 ] == 1) danger++;
+              if(bomb_matrix[stageful+1 ] == 1) danger++;
+              if(bomb_matrix[stageful+11] == 1) danger++;
+
+              if(bomb_matrix[stageful+10] == 1) danger++;
+              if(bomb_matrix[stageful-10] == 1) danger++;
+          } else if((stageful % 10) == 0) {
+              if(bomb_matrix[stageful-11] == 1) danger++;
+              if(bomb_matrix[stageful-1 ] == 1) danger++;
+              if(bomb_matrix[stageful+9 ] == 1) danger++;
+
+              if(bomb_matrix[stageful+10] == 1) danger++;
+              if(bomb_matrix[stageful-10] == 1) danger++;
+          } else {
+              if(bomb_matrix[stageful-11] == 1) danger++;
+              if(bomb_matrix[stageful-10] == 1) danger++;
+              if(bomb_matrix[stageful-9 ] == 1) danger++;
+              if(bomb_matrix[stageful-1 ] == 1) danger++;
+              if(bomb_matrix[stageful+1 ] == 1) danger++;
+              if(bomb_matrix[stageful+9 ] == 1) danger++;
+              if(bomb_matrix[stageful+10] == 1) danger++;
+              if(bomb_matrix[stageful+11] == 1) danger++;
+          }
+          if(danger <= min_danger) {
+            min_danger = danger;
+            final = stageful;
+          }
+        }
+        console.log("斷");
+        console.log(final);
+        document.getElementById(final).click();
+        lots--;
+      }
+    }
+
+  </script>
 
 </html>
