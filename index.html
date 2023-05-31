@@ -301,7 +301,7 @@
                 console.log(i);
             }
         }*/
-        check = 2;
+        check = 1;
         lots = 1;
         prev_num = 1;
         arms = 1;
@@ -427,7 +427,10 @@
           y.style = "Background: #4fc89a; font-weight: bold";
           visited_matrix[num] = 1;
         }
-        if(check == 0) alert("You died!");
+        if(check == 0) {
+          alert("You died!");
+          document.getElementById("setting").click();
+        }
         
         
 
