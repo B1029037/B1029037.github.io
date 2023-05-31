@@ -85,12 +85,15 @@
         <tr><td><button id=set_finish type="button" style="width: 50px; height: 50px"></button></td></tr>
       </tbody>
     </table>
+    <text id= "提醒" style= "color: #ffffff"></text>
     <text id= "distance" style= "color: #ffffff">距離獲勝還剩  格</text>
 
     <table>
       <tbody>
         <tr>
           <td><button id="divine" type="button" style="width: 50px; height: 50px" onclick="divine()"><b>鐵口直斷</b></button></td>
+          <td><button id="horizontal_destruction" type="button" style="width: 50px; height: 50px" onclick="horizontal_destruction()"><b>橫掃千軍</b></button></td>
+          <td><button id="not_to_die" type="button" style="width: 50px; height: 50px" onclick="not_to_die()"><b>免死金牌</b></button></td>
         </tr>
       </tbody>
     </table>
@@ -286,7 +289,11 @@
                           0,0,0,0,0,0,0,0,0,0,
                           0,0,0,0,0,0,0,0,0,0 ];
     var check = 1;
-    var lots = 3;
+    var lots = 1;
+    var prev_num = 1;
+    var arms = 1;
+    var alive = 1;
+    var protect = 0;
 
     function setting() {
         /*for(var i = 1; i <= 100; i++) {
@@ -294,9 +301,15 @@
                 console.log(i);
             }
         }*/
-        check = 1;
-        lots = 3;
+        check = 2;
+        lots = 1;
+        prev_num = 1;
+        arms = 1;
+        alive = 1;
+        protect = 0;
         document.getElementById("divine").style = "Background: #4fa4c8; color: #7d0783; width: 50px; height: 50px";
+        document.getElementById("horizontal_destruction").style = "Background: #4fa4c8; color: #7d0783; width: 50px; height: 50px";
+        document.getElementById("not_to_die").style = "Background: #4fa4c8; color: #7d0783; width: 50px; height: 50px";
         for(var i = 0, j = 0; (  (i <= grids-1) && (j != bombs)  ); i++) {
             if( (  ( Math.floor(Math.random()*(grids-i)) ) +1  ) <= (bombs-j) ) {
                 j++;
@@ -337,6 +350,7 @@
         else y.innerHTML = String(parseInt(y.innerHTML) + 1);*/
         /*y.innerHTML = Math.floor(Math.random()*100)*/
         var danger = 0;
+        if(protect == 0) document.getElementById("提醒").innerHTML = "";
 
         if(num == 1) {
             if(bomb_matrix[ 2] == 1) danger++;
@@ -397,10 +411,15 @@
           y.innerHTML = "x";
           y.style = "Background: #c6394c; color: #000000; font-weight: bold"
 
-          if(check > 1) {
-            check--;
+          if(protect > 0) {
+            protect = 0;
+            document.getElementById("提醒").innerHTML = "免死金牌效果觸發，已抵擋一次傷害。";
           } else {
-            check = 0;
+            if(check > 1) {
+              check--;
+            } else {
+              check = 0;
+            }
           }
 
         } else {
@@ -423,6 +442,11 @@
         if(yet == 0) {
           alert("Victory!");
           document.getElementById("setting").click();
+        }
+        prev_num = num;
+        if(protect > 0) {
+          protect--;
+          document.getElementById("提醒").innerHTML=(protect == 2)?"免死金牌，效果剩餘 2 回合。":(protect == 1)?"免死金牌，效果剩餘 1 回合。":"免死金牌時效已過，自求多福！";
         }
     }
 
@@ -503,7 +527,46 @@
         if(lots == 0) {
             document.getElementById("divine").style = "color: #808080 ; Background: #000000; width: 50px; height: 50px";
         }
+      } else {
+        lots = 0;
+        document.getElementById("divine").style = "color: #808080 ; Background: #000000; width: 50px; height: 50px";
       }
+    }
+
+    function horizontal_destruction() {
+      if(arms >= 1) {
+        var L = prev_num-1;
+        var R = prev_num+1;
+        while(Math.floor((L-1)/10) == Math.floor((prev_num-1)/10)) {
+          if((bomb_matrix[L] == 0) && (visited_matrix[L] == 0)) document.getElementById(L).click();
+          L--;
+        }
+        while(Math.floor((R-1)/10) == Math.floor((prev_num-1)/10)) {
+          if((bomb_matrix[R] == 0) && (visited_matrix[R] == 0)) document.getElementById(R).click();
+          R++;
+        }
+        arms--;
+        if(arms == 0) {
+          document.getElementById("horizontal_destruction").style = "color: #808080 ; Background: #000000; width: 50px; height: 50px";
+        }
+      } else {
+        arms = 0;
+        document.getElementById("horizontal_destruction").style = "color: #808080 ; Background: #000000; width: 50px; height: 50px";
+      } 
+    }
+
+    function not_to_die() {
+      if(alive >= 1) {
+        protect = 3;
+        document.getElementById("提醒").innerHTML = "免死金牌已生效，可用時長 3 回合。"
+        alive--;
+        if(alive == 0) {
+          document.getElementById("not_to_die").style = "color: #808080 ; Background: #000000; width: 50px; height: 50px";
+        }
+      } else {
+        alive = 0;
+        document.getElementById("not_to_die").style = "color: #808080 ; Background: #000000; width: 50px; height: 50px";
+      } 
     }
 
   </script>
