@@ -58,13 +58,13 @@
   </head>
   <body>
     
-    
+    <div id="root"></div>
     
     <!--align-items: center;
     justify-content: center;-->
 
     
-    <div id="root"></div>
+    
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -76,17 +76,28 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
 
-    <p></p>
 
-    
+    <!--<table>
+      <tbody>
+        
+      </tbody>
+    </table>-->
     <table>
       <tbody>
-        <tr><td><button id=setting type="button" style="width: 50px; height: 50px" onclick="setting()">set the bombs</button></td></tr>
-        <tr><td><button id=set_finish type="button" style="width: 50px; height: 50px"></button></td></tr>
+        <tr><td><input id="how_many_bombs" style="width: 50px; height: 25px"></input></td>
+        <td><button id="" type="button" style="width: 230px; height: 30px" onclick="get_number_of_bombs()">輸入炸彈數量（預設15）</button></td></tr>
+        <tr><td><input id="how_many_HP" style="width: 50px; height: 25px"></input></td>
+          <td><button id="" type="button" style="width: 230px; height: 30px" onclick="get_number_of_HP()">輸入生命值（預設1）</button></td></tr>
       </tbody>
     </table>
-    <text id= "提醒" style= "color: #ffffff"></text>
-    <text id= "distance" style= "color: #ffffff">距離獲勝還剩  格</text>
+
+    <table>
+      <tbody>
+        <tr><td><button id="setting" type="button" style="width: 50px; height: 50px" onclick="setting()">set the bombs</button></td></tr>
+      </tbody>
+    </table>
+    
+    <text id= "distance" style= "color: #ffffff">距離獲勝還差  格</text>
 
     <table>
       <tbody>
@@ -222,8 +233,7 @@
         </tr>
         </tbody>
     </table>
-
-
+    <text id= "提醒" style= "color: #ffffff"></text>
 
     
     
@@ -249,10 +259,12 @@
         <tr><td><p></p></td></tr>
       </tbody>
     </table>
+    
   </body>
 
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <script>
+    var bombs_yet = 15;
     var bombs = 15;
     var grids = 100;
     var Locate = [0,
@@ -288,6 +300,7 @@
                           0,0,0,0,0,0,0,0,0,0,
                           0,0,0,0,0,0,0,0,0,0,
                           0,0,0,0,0,0,0,0,0,0 ];
+    var check_yet = 1;
     var check = 1;
     var lots = 1;
     var prev_num = 1;
@@ -296,12 +309,8 @@
     var protect = 0;
 
     function setting() {
-        /*for(var i = 1; i <= 100; i++) {
-            if(Math.floor(Math.random()*100)+1 <= bombs) {
-                console.log(i);
-            }
-        }*/
-        check = 1;
+        bombs = bombs_yet;
+        check = check_yet;
         lots = 1;
         prev_num = 1;
         arms = 1;
@@ -310,6 +319,11 @@
         document.getElementById("divine").style = "Background: #4fa4c8; color: #7d0783; width: 50px; height: 50px";
         document.getElementById("horizontal_destruction").style = "Background: #4fa4c8; color: #7d0783; width: 50px; height: 50px";
         document.getElementById("not_to_die").style = "Background: #4fa4c8; color: #7d0783; width: 50px; height: 50px";
+        document.getElementById("提醒").innerHTML = "";
+        
+        for(var i = 0; i <= 100; i++) {
+          Locate[i] = 0;
+        } 
         for(var i = 0, j = 0; (  (i <= grids-1) && (j != bombs)  ); i++) {
             if( (  ( Math.floor(Math.random()*(grids-i)) ) +1  ) <= (bombs-j) ) {
                 j++;
@@ -337,8 +351,6 @@
         }
         //console.log(bomb_matrix);
         //document.getElementById("setting").innerHTML = "";
-        var y = document.getElementById("set_finish")
-        y.innerHTML = "set finish";
         var D = document.getElementById("distance");
         var yet = 100-bombs;
         D.innerHTML = "距離獲勝還差 " + yet + " 格";
@@ -455,6 +467,11 @@
 
     function divine() {
       if(lots >= 1) {
+        lots--;
+        if(lots == 0) {
+            document.getElementById("divine").style = "color: #808080 ; Background: #000000; width: 50px; height: 50px";
+        }
+
         var final = Math.floor(Math.random()*100)+1;
         var danger = 8;
         var min_danger = danger;
@@ -526,10 +543,6 @@
         console.log("斷");
         console.log(final);
         document.getElementById(final).click();
-        lots--;
-        if(lots == 0) {
-            document.getElementById("divine").style = "color: #808080 ; Background: #000000; width: 50px; height: 50px";
-        }
       } else {
         lots = 0;
         document.getElementById("divine").style = "color: #808080 ; Background: #000000; width: 50px; height: 50px";
@@ -538,6 +551,11 @@
 
     function horizontal_destruction() {
       if(arms >= 1) {
+        arms--;
+        if(arms == 0) {
+          document.getElementById("horizontal_destruction").style = "color: #808080 ; Background: #000000; width: 50px; height: 50px";
+        }
+
         var L = prev_num-1;
         var R = prev_num+1;
         while(Math.floor((L-1)/10) == Math.floor((prev_num-1)/10)) {
@@ -548,14 +566,10 @@
           if((bomb_matrix[R] == 0) && (visited_matrix[R] == 0)) document.getElementById(R).click();
           R++;
         }
-        arms--;
-        if(arms == 0) {
-          document.getElementById("horizontal_destruction").style = "color: #808080 ; Background: #000000; width: 50px; height: 50px";
-        }
       } else {
         arms = 0;
         document.getElementById("horizontal_destruction").style = "color: #808080 ; Background: #000000; width: 50px; height: 50px";
-      } 
+      }
     }
 
     function not_to_die() {
@@ -570,6 +584,36 @@
         alive = 0;
         document.getElementById("not_to_die").style = "color: #808080 ; Background: #000000; width: 50px; height: 50px";
       } 
+    }
+
+    function get_number_of_bombs() {
+      bombs_tmp = document.getElementById("how_many_bombs").value;
+      if(isNaN(bombs_tmp)) {
+        bombs_yet = 15;
+      } else {
+        if(bombs_tmp == "") {
+          bombs_yet = 15;
+        } else if(bombs_tmp > 99) {
+          bombs_yet = 99;
+        } else if(bombs_tmp < 1) {
+          bombs_yet = 1;
+        } else bombs_yet = bombs_tmp;
+      }
+    }
+
+    function get_number_of_HP() {
+      HP_tmp = document.getElementById("how_many_HP").value;
+      if(isNaN(HP_tmp)) {
+        check_yet = 1;
+      } else {
+        if(HP_tmp == "") {
+          check_yet = 1;
+        } else if(HP_tmp > 10) {
+          check_yet = 10;
+        } else if(HP_tmp < 1) {
+          check_yet = 1;
+        } else check_yet = HP_tmp;
+      }
     }
 
   </script>
