@@ -87,13 +87,13 @@
         <tr><td><input id="how_many_bombs" style="width: 50px; height: 25px"></input></td>
         <td><button id="" type="button" style="width: 230px; height: 30px" onclick="get_number_of_bombs()">輸入炸彈數量（預設15）</button></td></tr>
         <tr><td><input id="how_many_HP" style="width: 50px; height: 25px"></input></td>
-          <td><button id="" type="button" style="width: 230px; height: 30px" onclick="get_number_of_HP()">輸入生命值（預設1）</button></td></tr>
+        <td><button id="" type="button" style="width: 230px; height: 30px" onclick="get_number_of_HP()">輸入生命值（預設1）</button></td></tr>
       </tbody>
     </table>
 
     <table>
       <tbody>
-        <tr><td><button id="setting" type="button" style="width: 50px; height: 50px" onclick="setting()">set the bombs</button></td></tr>
+        <tr><td><button id="setting" type="button" style="width: 230px; height: 30px" onclick="setting()">set the bombs</button></td></tr>
       </tbody>
     </table>
     
@@ -106,6 +106,12 @@
           <td><button id="horizontal_destruction" type="button" style="width: 50px; height: 50px" onclick="horizontal_destruction()"><b>橫掃千軍</b></button></td>
           <td><button id="not_to_die" type="button" style="width: 50px; height: 50px" onclick="not_to_die()"><b>免死金牌</b></button></td>
         </tr>
+      </tbody>
+    </table>
+
+    <table>
+      <tbody>
+        <tr><td><button id="flagging" type="button" style="width: 230px; height: 50px" onclick="flagging()">"踩地雷" / 立旗囗囗囗囗囗囗囗囗囗(不建議在開啟立旗模式時使用道具)</button></td></tr>
       </tbody>
     </table>
 
@@ -264,6 +270,7 @@
 
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <script>
+    var mode = true;
     var bombs_yet = 15;
     var bombs = 15;
     var grids = 100;
@@ -356,7 +363,18 @@
         D.innerHTML = "距離獲勝還差 " + yet + " 格";
     }
 
-    function myFunction(num) {
+    function flagging() {
+      mode = !mode
+      document.getElementById("flagging").innerHTML = mode ? "\"踩地雷\" / 立旗囗囗囗囗囗囗囗囗囗(不建議在開啟立旗模式時使用道具)" 
+                                                           : "踩地雷 / \"立旗\"囗囗囗囗囗囗囗囗囗(不建議在開啟立旗模式時使用道具)";
+    }
+
+    function myFunction0(num) {
+      var y = document.getElementById(num);
+      y.innerHTML = "B";
+    }
+
+    function myFunction1(num) {
         var y = document.getElementById(num);
         /*if(y.innerHTML == "?") y.innerHTML = 1;
         else y.innerHTML = String(parseInt(y.innerHTML) + 1);*/
@@ -463,6 +481,15 @@
           protect--;
           document.getElementById("提醒").innerHTML=(protect == 2)?"免死金牌，效果剩餘 2 回合。":(protect == 1)?"免死金牌，效果剩餘 1 回合。":"免死金牌時效已過，自求多福！";
         }
+    }
+
+    function myFunction(num) {
+      var y = document.getElementById(num);
+      if(!mode) {
+        myFunction0(num);
+      } else {
+        myFunction1(num);
+      }
     }
 
     function divine() {
